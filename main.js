@@ -1,5 +1,12 @@
 import {tictactoe} from './tictactoe.js';
 
+function restartGame(cells)
+{
+    cells.forEach(cell => {
+        cell.innerText = '';
+    })
+}
+
 window.addEventListener('load', ()=>{
     const cells = document.querySelectorAll('.cell');
     const game = tictactoe();
@@ -21,10 +28,12 @@ window.addEventListener('load', ()=>{
             let result = game.logic(player);
             if(result['match'] === 'won'){
                 alert(`${result.player} won!`);
+                restartGame(cells);
                 return
             }
             else if(result.match === 'draw'){
                 alert('Draw!');
+                restartGame(cells);
                 return
             }
 
@@ -48,9 +57,13 @@ window.addEventListener('load', ()=>{
             result = game.logic(player);
             if(result.match === 'won'){
                 alert(`${result.player} won!`);
+                restartGame(cells);
+                return;
             }
             else if(result.match === 'draw'){
                 alert('Draw!');
+                restartGame(cells);
+                return;
             }
         }
         );

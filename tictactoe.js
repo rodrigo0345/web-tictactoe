@@ -51,7 +51,11 @@ export const tictactoe = () =>{
             }
         });
 
-        if(result["match"] === 'won') return result;
+        if(result["match"] === 'won')
+        {
+            resetBoard();
+            return result;
+        };
 
         /* check for draw */
         let full = true;
@@ -62,9 +66,17 @@ export const tictactoe = () =>{
         });
         if(full){
             result = { 'player': 'draw', 'match': 'draw'};
+            resetBoard();
         }
 
         return result;
+    }
+    const resetBoard = () => {
+        board = [
+            '', '', '',
+            '', '', '',
+            '', '', ''
+        ];
     }
 
     return { logic, board, modifyBoard }; 
