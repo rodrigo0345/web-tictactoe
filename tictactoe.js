@@ -1,5 +1,5 @@
-const tictactoe = () =>{
-    const board = [
+export const tictactoe = () =>{
+    let board = [
         '', '', '',
         '', '', '',
         '', '', ''
@@ -16,7 +16,19 @@ const tictactoe = () =>{
         [0, 4, 8],
         [2, 4, 6]
     ];
-    const logic = (new_board, player_playing) => {
+    const modifyBoard = (cell_number, player_playing) =>{
+        let player_signal;
+
+        if(player_playing.toLowerCase() === 'player'){
+            player_signal = 'X';
+        }
+        else if(player_playing.toLowerCase() === 'bot'){
+            player_signal = 'O';
+        }
+
+        board[cell_number - 1] = player_signal;
+    }
+    const logic = (player_playing) => {
         let player_signal;
 
         if(player_playing.toLowerCase() === 'player'){
@@ -30,15 +42,16 @@ const tictactoe = () =>{
             return;
         }
 
-        board = new_board;
+        let result = { 'player': player_playing, 'match': 'none'};
 
-        let result;
         winningCombinations.forEach(combination => {
             const [a, b, c] = combination;
             if (board[a] === player_signal && board[b] === player_signal && board[c] === player_signal) {
                 result = { 'player': player_playing, 'match': 'won'};
             }
         });
+
+        if(result["match"] === 'won') return result;
 
         /* check for draw */
         let full = true;
@@ -54,5 +67,5 @@ const tictactoe = () =>{
         return result;
     }
 
-    return { logic, board}; 
+    return { logic, board, modifyBoard }; 
 }
