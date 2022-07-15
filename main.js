@@ -10,9 +10,16 @@ function restartGame(cells)
 window.addEventListener('load', ()=>{
     const cells = document.querySelectorAll('.cell');
     const game = tictactoe();
+    let newGame = true;
 
     cells.forEach(cell => {
-        cell.addEventListener('click', ()=>{
+        cell.addEventListener('click', (e)=>{
+            if(newGame)
+            {
+                game.resetBoard();
+                newGame = false;
+            }
+
             const cell_id = cell.id;
             const cell_number = cell_id.split('-')[1];
 
@@ -55,14 +62,13 @@ window.addEventListener('load', ()=>{
                 final_board.classList.add('winner');
                 final_board.classList.remove('hide');
 
-                // set timeout 
                 setTimeout(() => { 
                     final_board.classList.add('hide');
                     final_board.classList.remove('winner');
 
                     restartGame(cells);
+                    newGame = true;
                 }, 2000);   
-                game.resetBoard();
             }
         }
         );
