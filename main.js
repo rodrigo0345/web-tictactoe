@@ -54,9 +54,16 @@ window.addEventListener('load', ()=>{
                 if(result.match.toLowerCase() === 'draw') msg.innerText = `Draw!`;
                 else
                 {
-                    result.match === 'won' && result.player.toLowerCase() === 'bot'?
-                                             msg.innerText = `You lost!` :
-                                            msg.innerText = `You won!`;
+                    if(result.match === 'won' && result.player.toLowerCase() === 'bot')
+                    {
+                        msg.innerText = `You lost!`;
+                        msg.classList.add('lost');
+                    }
+                    else
+                    {
+                        msg.innerText = `You won!`;
+                        msg.classList.add('won');
+                    }                     
                 }
 
                 final_board.classList.add('winner');
@@ -66,9 +73,11 @@ window.addEventListener('load', ()=>{
                     final_board.classList.add('hide');
                     final_board.classList.remove('winner');
 
+                    msg.classList.remove('won');
+                    
                     restartGame(cells);
                     newGame = true;
-                }, 2000);   
+                }, 1800);   
             }
         }
         );
