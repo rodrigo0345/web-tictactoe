@@ -29,43 +29,12 @@ export const tictactoe = () =>{
         board[cell_number - 1] = player_signal;
     }
     const logic = (player_playing) => {
-        let player_signal;
-
-        if(player_playing.toLowerCase() === 'player'){
-            player_signal = 'X';
-        }
-        else if(player_playing.toLowerCase() === 'bot'){
-            player_signal = 'O';
-        }
-        else{
-            console.log('Invalid player');
-            return;
-        }
-
+        
         let result = { 'player': player_playing, 'match': 'none'};
+        result = checkGameStatus(result, player_playing);
 
-        winningCombinations.forEach(combination => {
-            const [a, b, c] = combination;
-            if (board[a] === player_signal && board[b] === player_signal && board[c] === player_signal) {
-                result = { 'player': player_playing, 'match': 'won'};
-            }
-        });
-
-        if(result["match"] === 'won')
+        if(result["match"] === 'won' || result["match"] === 'draw')
         {
-            resetBoard();
-            return result;
-        };
-
-        /* check for draw */
-        let full = true;
-        board.forEach( cell => {
-            if(cell === ''){
-                full = false;
-            }
-        });
-        if(full){
-            result = { 'player': 'draw', 'match': 'draw'};
             resetBoard();
         }
 
@@ -78,6 +47,49 @@ export const tictactoe = () =>{
             '', '', ''
         ];
     }
+    const checkGameStatus = (result1, player_playing) =>
+    {
+        let player_signal;
 
-    return { logic, board, modifyBoard }; 
+        if(player_playing.toLowerCase() === 'player'){
+            player_signal = 'X';
+        }
+        else if(player_playing.toLowerCase() === 'bot'){
+            player_signal = 'O';
+        }
+        else{
+            console.log('Invalid player');
+            return;
+        }
+        
+        let full = true;
+        board.forEach( cell => {
+            if(cell === ''){
+                full = false;
+            }
+        });
+
+        if(full){
+            result1["match"] = 'draw';
+        }
+
+        winningCombinations.forEach(combination => {
+            const [a, b, c] = combination;
+            if (board[a] === player_signal && board[b] === player_signal && board[c] === player_signal) {
+                result1 = { 'player': player_playing, 'match': 'won'};
+            }
+        });
+    
+        return result1;
+    }
+
+    return { logic, board, modifyBoard, checkGameStatus }; 
+}
+
+function Bot(original_board)
+{
+    const bestMove = () =>{
+        const aux_board = tictactoe().board;
+        console.log(aux_board);
+    }
 }

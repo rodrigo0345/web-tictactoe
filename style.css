@@ -17,6 +17,23 @@ header h1 {
   font-size: 2.5rem;
 }
 
+@-webkit-keyframes animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 div#game {
   display: flex;
   flex-direction: column;
