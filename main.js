@@ -42,18 +42,18 @@ window.addEventListener('load', ()=>{
             if(result.match !== 'none')
             {
                 const final_board = document.getElementById('final-board');
-                final_board.classList.add('winner');
-                final_board.classList.remove('hide');
-
                 const msg = document.getElementById('msg');
 
                 if(result.match.toLowerCase() === 'draw') msg.innerText = `Draw!`;
                 else
                 {
-                result.match === 'won' && result.player.toLowerCase() === 'bot'?
+                    result.match === 'won' && result.player.toLowerCase() === 'bot'?
                                              msg.innerText = `You lost!` :
                                             msg.innerText = `You won!`;
                 }
+
+                final_board.classList.add('winner');
+                final_board.classList.remove('hide');
 
                 // set timeout 
                 setTimeout(() => { 
@@ -62,6 +62,7 @@ window.addEventListener('load', ()=>{
 
                     restartGame(cells);
                 }, 2000);   
+                game.resetBoard();
             }
         }
         );

@@ -84,7 +84,7 @@ export const tictactoe = () =>{
         board[index] = symbol;
     }
 
-    return { logic, board, modifyBoard, checkGameStatus, bruteForceTable }; 
+    return { logic, board, modifyBoard, checkGameStatus, bruteForceTable, resetBoard }; 
 }
 
 export function Bot()
