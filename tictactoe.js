@@ -4,8 +4,6 @@ export const tictactoe = () =>{
         '', '', '',
         '', '', ''
     ];
-    const player = 'X';
-    const computer = 'O';
     const winningCombinations = [
         [0, 1, 2],
         [3, 4, 5],
@@ -70,7 +68,7 @@ export const tictactoe = () =>{
         });
 
         if(full){
-            result1["match"] = 'draw';
+            result1 = { 'player': player_playing, 'match': 'draw'};
         }
 
         winningCombinations.forEach(combination => {
@@ -83,13 +81,99 @@ export const tictactoe = () =>{
         return result1;
     }
 
-    return { logic, board, modifyBoard, checkGameStatus }; 
+    const bruteForceTable = (index, symbol) => {
+        board[index] = symbol;
+    }
+
+    return { logic, board, modifyBoard, checkGameStatus, bruteForceTable }; 
 }
 
-function Bot(original_board)
+export function Bot(original_game)
 {
+    const cells = document.querySelectorAll('.cell');
+
+    let best_score = -Infinity;
+    let best_move = 0;
+
     const bestMove = () =>{
-        const aux_board = tictactoe().board;
-        console.log(aux_board);
+        const aux_game = tictactoe();
+
+        // copy state of the game
+        original_game.board.forEach((cell, index) => {
+            aux_game.bruteForceTable(index, cell);
+        });
+
+        // bot playing
+        for(let i = 0; i < 9; i++)
+        {
+            if(original_game.board[i] === '')
+            {
+                aux_game.modifyBoard(i + 1, 'bot');
+                let score = minimax(aux_game, 0, 'player');
+                aux_game.bruteForceTable(i, '');
+
+                if(score > best_score)
+                {
+                    best_score = score;
+                    best_move = i + 1;
+                }
+            }
+        }
+        return best_move;
     }
+    let scores = {
+        'bot': 1,
+        'player': -1,
+        'draw': 0
+    }
+    const minimax = (aux_game, depth, player) => {
+
+        // check if game is over
+        let result = null;
+        console.log(aux_game.board);
+        result = aux_game.checkGameStatus(result, player);
+
+        if(result !== null)
+        {
+            let score = scores[result.player];
+            return score;
+        }
+
+        if(player === 'bot')
+        {
+            let best_score = -Infinity;
+            for(let i = 0; i < 9; i++){
+                if(aux_game.board[i] === '')
+                {
+                    aux_game.modifyBoard(i + 1, 'bot');
+                    let score = minimax(aux_game, depth + 1, 'player');
+                    aux_game.bruteForceTable(i, '');
+                    
+                    if(score > best_score)
+                    {
+                        best_score = score;
+                    }
+                }
+            }
+            return best_score;
+        }
+        else
+        {
+            let best_score = Infinity;
+            for(let i = 0; i < 9; i++){
+                if(aux_game.board[i] === ''){
+                    aux_game.modifyBoard(i + 1, 'player');
+                    let score = minimax(aux_game, depth + 1, 'bot');
+                    aux_game.bruteForceTable(i, '');
+
+                    if(score < best_score)
+                    {
+                        best_score = score;
+                    }
+                }
+            }
+            return best_score;
+        }
+    }
+    return { bestMove };
 }

@@ -1,4 +1,4 @@
-import {tictactoe} from './tictactoe.js';
+import {tictactoe, Bot} from './tictactoe.js';
 
 function restartGame(cells)
 {
@@ -38,23 +38,13 @@ window.addEventListener('load', ()=>{
             }
 
             /* bot move */
-            let random = Math.floor(Math.random() * 10) + 1;
-            let cell_value_bot;
-            do
-            {   
-                random -= 1;
+            let bot_move = Bot(game).bestMove();
 
-                if(random < 1){
-                    random = 9;
-                }
-                cell_value_bot = document.getElementById('cell-' + random).innerText;
-   
-            }while(cell_value_bot !== '');
-
-            document.getElementById('cell-' + random).innerText = 'O';
+            document.getElementById('cell-' + bot_move).innerText = 'O';
             player = 'bot';
-            game.modifyBoard(random, player);
+            game.modifyBoard(bot_move, player);
             result = game.logic(player);
+            
             if(result.match === 'won'){
                 alert(`${result.player} won!`);
                 restartGame(cells);
