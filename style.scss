@@ -82,4 +82,48 @@ div#game{
         transform: scale(1.2);
     }
 
+    .winner{
+        background-color: #f6d365;
+        color: #000;
+        font-size: 3rem;
+        font-weight: bold;
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        border-radius: 1rem;
+        box-shadow: 0px 6px 10px rgba(255, 255, 255, 0.315);
+        transition: 0.4s;
+        animation: animation 2s ease-in-out;
+        bottom: 5px;
+
+        p{
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .lost{
+            color: crimson;
+        }
+        .won{
+            color: greenyellow;
+        }
+    }
+    @keyframes animation {
+        0% {
+            transform: translateY(4em);
+        }
+        50% {
+            transform: translateY(-4em);
+        }
+        100% {
+            transform: translateY(4em);
+        }
+    }
+}
+
+.hide{
+    display: none;
 }

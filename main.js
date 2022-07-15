@@ -26,35 +26,42 @@ window.addEventListener('load', ()=>{
             let player = 'Player';
             game.modifyBoard(cell_number, player);
             let result = game.logic(player);
-            if(result['match'] === 'won'){
-                alert(`${result.player} won!`);
-                restartGame(cells);
-                return
-            }
-            else if(result.match === 'draw'){
-                alert('Draw!');
-                restartGame(cells);
-                return
-            }
 
             /* bot move */
-            let bot = Bot();
-            let bot_move = bot.bestMove(game);
+            if(result.match === 'none' || result === null)
+            {
+                let bot = Bot();
+                let bot_move = bot.bestMove(game);
 
-            document.getElementById('cell-' + bot_move).innerText = 'O';
-            player = 'bot';
-            game.modifyBoard(bot_move, player);
-            result = game.logic(player);
-
-            if(result.match === 'won'){
-                alert(`${result.player} won!`);
-                restartGame(cells);
-                return;
+                document.getElementById('cell-' + bot_move).innerText = 'O';
+                player = 'bot';
+                game.modifyBoard(bot_move, player);
+                result = game.logic(player);
             }
-            else if(result.match === 'draw'){
-                alert('Draw!');
-                restartGame(cells);
-                return;
+            
+            if(result.match !== 'none')
+            {
+                const final_board = document.getElementById('final-board');
+                final_board.classList.add('winner');
+                final_board.classList.remove('hide');
+
+                const msg = document.getElementById('msg');
+
+                if(result.match.toLowerCase() === 'draw') msg.innerText = `Draw!`;
+                else
+                {
+                result.match === 'won' && result.player.toLowerCase() === 'bot'?
+                                             msg.innerText = `You lost!` :
+                                            msg.innerText = `You won!`;
+                }
+
+                // set timeout 
+                setTimeout(() => { 
+                    final_board.classList.add('hide');
+                    final_board.classList.remove('winner');
+
+                    restartGame(cells);
+                }, 2000);   
             }
         }
         );
