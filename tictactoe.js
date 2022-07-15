@@ -127,8 +127,9 @@ export function Bot()
 
         // check if game is over
         let result = null;
-        result = aux_game.checkGameStatus(result, player);
-
+        player === 'bot' ? result = aux_game.checkGameStatus(result, 'player') :
+                            result = aux_game.checkGameStatus(result, 'bot');
+        
         if(result !== null)
         {
             let score = scores[result.player.toLowerCase()];
