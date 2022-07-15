@@ -6,8 +6,40 @@
 
 body {
   min-height: 100vh;
+  background: #333;
 }
 
+header {
+  width: 100vw;
+  background: #333;
+  display: flex;
+  padding: 20px;
+  justify-content: space-around;
+  -webkit-animation: fadeIn 6s ease-in-out infinite;
+          animation: fadeIn 6s ease-in-out infinite;
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    filter: drop-shadow(6px 5px 20px rgb(202, 105, 41));
+  }
+  50% {
+    filter: drop-shadow(6px 5px 20px rgba(199, 96, 27, 0.534));
+  }
+  100% {
+    filter: drop-shadow(6px 5px 20px rgb(202, 105, 41));
+  }
+}
+@keyframes fadeIn {
+  0% {
+    filter: drop-shadow(6px 5px 20px rgb(202, 105, 41));
+  }
+  50% {
+    filter: drop-shadow(6px 5px 20px rgba(199, 96, 27, 0.534));
+  }
+  100% {
+    filter: drop-shadow(6px 5px 20px rgb(202, 105, 41));
+  }
+}
 header h1 {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   font-weight: 800;
@@ -17,24 +49,8 @@ header h1 {
   font-size: 2.5rem;
 }
 
-@-webkit-keyframes animation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes animation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 div#game {
+  background: #444;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,12 +58,16 @@ div#game {
   min-height: 90vh;
 }
 div#game div#board {
+  background-color: #333;
   padding: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   min-height: 400px;
   width: min(400px, 100%);
+  border-radius: 1rem;
+  box-shadow: 0px 6px 10px rgba(255, 255, 255, 0.315);
+  transition: 0.4s;
 }
 div#game div#board .cell {
   background-color: #fff;
@@ -57,8 +77,13 @@ div#game div#board .cell {
   justify-content: center;
   font-size: 3rem;
   font-weight: bold;
+  transition: 0.4s;
   cursor: pointer;
 }
-div#game div#board .player {
-  cursor: text;
+div#game div#board .cell:active {
+  background-color: #f6d365;
+  color: #000;
+}
+div#game div#board:hover {
+  transform: scale(1.2);
 }/*# sourceMappingURL=style.css.map */
