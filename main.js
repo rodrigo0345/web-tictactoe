@@ -38,13 +38,14 @@ window.addEventListener('load', ()=>{
             }
 
             /* bot move */
-            let bot_move = Bot(game).bestMove();
+            let bot = Bot();
+            let bot_move = bot.bestMove(game);
 
             document.getElementById('cell-' + bot_move).innerText = 'O';
             player = 'bot';
             game.modifyBoard(bot_move, player);
             result = game.logic(player);
-            
+
             if(result.match === 'won'){
                 alert(`${result.player} won!`);
                 restartGame(cells);

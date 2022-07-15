@@ -39,11 +39,10 @@ export const tictactoe = () =>{
         return result;
     }
     const resetBoard = () => {
-        board = [
-            '', '', '',
-            '', '', '',
-            '', '', ''
-        ];
+        for(let i = 0; i < board.length; i++)
+        {
+            board[i] = '';
+        }
     }
     const checkGameStatus = (result1, player_playing) =>
     {
@@ -68,7 +67,7 @@ export const tictactoe = () =>{
         });
 
         if(full){
-            result1 = { 'player': player_playing, 'match': 'draw'};
+            result1 = { 'player': 'draw', 'match': 'draw'};
         }
 
         winningCombinations.forEach(combination => {
@@ -88,14 +87,12 @@ export const tictactoe = () =>{
     return { logic, board, modifyBoard, checkGameStatus, bruteForceTable }; 
 }
 
-export function Bot(original_game)
+export function Bot()
 {
-    const cells = document.querySelectorAll('.cell');
+    const bestMove = (original_game) =>{
+        let best_score = -Infinity;
+        let best_move = 0;
 
-    let best_score = -Infinity;
-    let best_move = 0;
-
-    const bestMove = () =>{
         const aux_game = tictactoe();
 
         // copy state of the game
@@ -124,18 +121,17 @@ export function Bot(original_game)
     let scores = {
         'bot': 1,
         'player': -1,
-        'draw': 0
+        'draw': 0,
     }
     const minimax = (aux_game, depth, player) => {
 
         // check if game is over
         let result = null;
-        console.log(aux_game.board);
         result = aux_game.checkGameStatus(result, player);
 
         if(result !== null)
         {
-            let score = scores[result.player];
+            let score = scores[result.player.toLowerCase()];
             return score;
         }
 
