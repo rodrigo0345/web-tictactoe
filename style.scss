@@ -79,7 +79,9 @@ div#game{
         }
     }
     div#board:hover{
-        transform: scale(1.2);
+        @media (min-width: 768px){
+            transform: scale(1.2);
+        }  
     }
 
     .winner{

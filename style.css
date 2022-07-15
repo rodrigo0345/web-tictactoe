@@ -84,8 +84,10 @@ div#game div#board .cell:active {
   background-color: #f6d365;
   color: #000;
 }
-div#game div#board:hover {
-  transform: scale(1.2);
+@media (min-width: 768px) {
+  div#game div#board:hover {
+    transform: scale(1.2);
+  }
 }
 div#game .winner {
   background-color: #f6d365;
